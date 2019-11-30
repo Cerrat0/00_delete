@@ -1,0 +1,10 @@
+El archivo de configuración de Flume está configurado para escuchar en el nodo frontera del cluster, en la ruta:
+/home/acerrato/images/f
+Y bolcar en HDFS en la ruta:
+/user/acerrato/data/%y%m%d
+Ordenandolo por fecha en la que fueron ingestados.
+
+NOTA: Los archivos son movidos al nodo frontera vía scp. En ocasiones Flume intenta tomar los archivos antes de ser descargados por completo a este directorio, por lo que da errores y el resultado es archivos de 1kb en HDFS.
+Si vamos a dejar Flume escuchando de manera constante nos encontrariamos con este error.
+Para solucionarlo hemos creado un programa en python (clear_node.py) que quedaría ejecutandose, va moviendo los archivos a la carpeta donde escucha Flume una vez que están totalmente descargados.
+
